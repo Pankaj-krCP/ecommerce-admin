@@ -17,7 +17,7 @@ const columns = [
   },
   {
     title: "Status",
-    dataIndex: "staus",
+    dataIndex: "status",
   },
 ];
 const data1 = [];
@@ -26,28 +26,28 @@ for (let i = 0; i < 46; i++) {
     key: i,
     name: `Edward King ${i}`,
     product: 32,
-    staus: `London, Park Lane no. ${i}`,
+    status: `London, Park Lane no. ${i}`,
   });
 }
 const Dashboard = () => {
   const data = [
-    { month: "Jan", value: 35 },
-    { month: "Feb", value: 40 },
-    { month: "Mar", value: 323 },
-    { month: "Apr", value: 523 },
-    { month: "May", value: 49 },
-    { month: "Jun", value: 64 },
-    { month: "Jul", value: 72 },
-    { month: "Aug", value: 94 },
-    { month: "Sep", value: 134 },
-    { month: "Oct", value: 72 },
-    { month: "Nov", value: 94 },
-    { month: "Dec", value: 134 },
+    { month: "Jan", income: 35 },
+    { month: "Feb", income: 40 },
+    { month: "Mar", income: 323 },
+    { month: "Apr", income: 523 },
+    { month: "May", income: 49 },
+    { month: "Jun", income: 64 },
+    { month: "Jul", income: 72 },
+    { month: "Aug", income: 94 },
+    { month: "Sep", income: 134 },
+    { month: "Oct", income: 72 },
+    { month: "Nov", income: 94 },
+    { month: "Dec", income: 134 },
   ];
   const config = {
     data,
     xField: "month",
-    yField: "value",
+    yField: "income",
     point: {
       shapeField: "square",
       sizeField: 4,

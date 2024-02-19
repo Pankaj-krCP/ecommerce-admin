@@ -65,7 +65,7 @@ const Dashboard = () => {
     <div>
       <h3 className="mb-4 title">Dashboard</h3>
       <div className="d-flex justify-content-between align-items-center gap-3">
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
+        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-red p-3 roudned-3">
           <div>
             <p className="desc">Total</p>
             <h4 className="mb-0 sub-title">$1100</h4>

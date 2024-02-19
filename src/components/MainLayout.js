@@ -15,7 +15,7 @@ import { ImBlog } from "react-icons/im";
 import { IoIosNotifications } from "react-icons/io";
 
 import { Layout, Menu, Button, theme } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
@@ -62,7 +62,7 @@ const MainLayout = () => {
                 {
                   key: "Product",
                   icon: <AiOutlineShoppingCart className="fs-4" />,
-                  label: "product",
+                  label: "Add product",
                 },
                 {
                   key: "product-list",
@@ -72,7 +72,7 @@ const MainLayout = () => {
                 {
                   key: "brand",
                   icon: <SiBrandfolder className="fs-4" />,
-                  label: "Brand",
+                  label: "Add Brand",
                 },
                 {
                   key: "brand-list",
@@ -82,7 +82,7 @@ const MainLayout = () => {
                 {
                   key: "category",
                   icon: <BiCategoryAlt className="fs-4" />,
-                  label: "Category",
+                  label: "Add Category",
                 },
                 {
                   key: "category-list",
@@ -92,7 +92,7 @@ const MainLayout = () => {
                 {
                   key: "color",
                   icon: <AiOutlineBgColors className="fs-4" />,
-                  label: "Color",
+                  label: "Add Color",
                 },
                 {
                   key: "color-list",
@@ -171,9 +171,34 @@ const MainLayout = () => {
                   alt="profile"
                 />
               </div>
-              <div>
+              <div
+                role="button"
+                id="dropdownMenuLink"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 <h5 className="mb-0">Pankaj</h5>
                 <p className="mb-0">pankajkumar70792@gmail.com</p>
+              </div>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li>
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ height: "auto", lineHeight: "20px" }}
+                    to="/"
+                  >
+                    View Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ height: "auto", lineHeight: "20px" }}
+                    to="/"
+                  >
+                    Signout
+                  </Link>
+                </li>
               </div>
             </div>
           </div>

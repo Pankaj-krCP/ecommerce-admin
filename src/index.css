@@ -2,10 +2,6 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-html {
-  overflow: hidden;
-}
-
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;

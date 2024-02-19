@@ -38,7 +38,7 @@ const MainLayout = () => {
           mode="inline"
           defaultSelectedKeys={["dashboard"]}
           onClick={({ key }) => {
-            if (key == "signout") {
+            if (key === "signout") {
             } else {
               navigate(key);
             }
@@ -117,7 +117,7 @@ const MainLayout = () => {
                   label: "Add Blog",
                 },
                 {
-                  key: "blog",
+                  key: "blog-list",
                   icon: <FaBloggerB className="fs-4" />,
                   label: "Blog-list",
                 },

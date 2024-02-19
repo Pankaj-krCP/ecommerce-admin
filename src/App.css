@@ -1,85 +1,3 @@
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #777777;
-}
-
-body {
-  font-family: "Roboto", sans-serif;
-}
-
-.trigger {
-  font-size: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-  width: 64;
-  height: 64;
-}
-
-.trigger:hover {
-  color: #1890ff;
-}
-
-.ant-Layout {
-  min-height: 100vh;
-}
-.ant-Layout-sider {
-  flex: 0 0 250px !important;
-  max-width: 250px !important;
-  min-width: 250px !important;
-  width: 250px !important;
-}
-.ant-Layout-sider-collapsed {
-  flex: 0 0 80px !important;
-  max-width: 80px !important;
-  min-width: 80px !important;
-  width: 80px !important;
-}
-
-.sm-logo {
-  display: none;
-}
-
-.ant-Layout-sider-collapsed .sm-logo {
-  display: block;
-}
-
-.ant-Layout-sider-collapsed .lg-logo {
-  display: none;
-}
-
-.logo {
-  height: 64px;
-  margin: 0px;
-  background: rgba(255, 255, 255, 0.3);
-}
-
-main {
-  overflow-y: scroll;
-}
-
-.ant-menu-title-content {
-  font-size: 16px;
-}
-
-.ant-Layout-header h5 {
-  line-height: 22px;
-  font-size: 14px;
-}
-
-.ant-Layout-header p {
-  line-height: 22px;
-  font-size: 13px;
-}
-
-.ant-Layout-header div .badge {
-  top: -6px;
-  right: -2px;
-}
-
 .link {
   text-decoration: none;
   color: black;
@@ -91,4 +9,12 @@ main {
   color: white;
   width: 100%;
   text-align: center;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
 }

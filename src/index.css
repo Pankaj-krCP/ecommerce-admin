@@ -1,13 +1,87 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Roboto", sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #88888849; /* You can set the color of the scrollbar thumb */
+}
+
+.trigger {
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 64;
+  height: 64;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.ant-Layout {
+  min-height: 100vh;
+}
+.ant-Layout-sider {
+  flex: 0 0 250px !important;
+  max-width: 250px !important;
+  min-width: 250px !important;
+  width: 250px !important;
+}
+.ant-Layout-sider-collapsed {
+  flex: 0 0 80px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
+  width: 80px !important;
+}
+
+.sm-logo {
+  display: none;
+}
+
+.ant-Layout-sider-collapsed .sm-logo {
+  display: block;
+}
+
+.ant-Layout-sider-collapsed .lg-logo {
+  display: none;
+}
+
+.logo {
+  height: 64px;
+  margin: 0px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+main {
+  height: 85vh;
+  overflow-y: scroll;
+  background-color: transparent;
+}
+
+.ant-menu-title-content {
+  font-size: 16px;
+}
+
+.ant-Layout-header h5 {
+  line-height: 22px;
+  font-size: 14px;
+}
+
+.ant-Layout-header p {
+  line-height: 22px;
+  font-size: 13px;
+}
+
+.ant-Layout-header div .badge {
+  top: -6px;
+  right: -2px;
 }

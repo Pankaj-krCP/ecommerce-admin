@@ -28,7 +28,7 @@
 }
 
 .red {
-  color: var(--color-212529);
+  color: var(--color-e52e2e);
   font-size: 14px;
   font-family: Roboto !important;
 }
@@ -72,3 +72,8 @@
   height: 40%;
 }
 /* Dragger end here */
+
+.error {
+  color: red;
+  font-size: 12px;
+}

@@ -1,5 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table } from "antd";
+import { BiEdit } from "react-icons/bi";
+import { AiFillDelete } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { getCategories } from "../features/bcategory/bcategorySlice";
+
 const columns = [
   {
     title: "SNo",
@@ -8,26 +14,38 @@ const columns = [
   {
     title: "Name",
     dataIndex: "name",
+    sorter: (a, b) => a.name.localeCompare(b.name),
   },
+
   {
-    title: "Product",
-    dataIndex: "product",
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
+    title: "Action",
+    dataIndex: "action",
   },
 ];
-const data1 = [];
-for (let i = 0; i < 46; i++) {
-  data1.push({
-    key: i,
-    name: `Edward King ${i}`,
-    product: 32,
-    status: `London, Park Lane no. ${i}`,
-  });
-}
+
 const Blogcatlist = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
+  const bcategoryState = useSelector((state) => state.bCategory.bCategories);
+  const data1 = [];
+  for (let i = 0; i < bcategoryState.length; i++) {
+    data1.push({
+      key: i + 1,
+      name: bcategoryState[i].title,
+      action: (
+        <>
+          <Link to="/" className=" fs-5 text-blue">
+            <BiEdit />
+          </Link>
+          <Link className="ms-3 fs-5 text-danger" to="/">
+            <AiFillDelete />
+          </Link>
+        </>
+      ),
+    });
+  }
   return (
     <div>
       <h3 className="mb-4 title">Blog Categories</h3>

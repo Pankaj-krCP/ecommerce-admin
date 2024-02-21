@@ -1,4 +1,5 @@
 import axios from "axios";
+import { config } from "../../utils/axiosconfig";
 import { base_url } from "../../utils/base_urls";
 
 const login = async (user) => {
@@ -9,8 +10,14 @@ const login = async (user) => {
   return response.data;
 };
 
+const getOrders = async () => {
+  const response = await axios.get(`${base_url}user/getallorders`, config);
+  return response.data;
+};
+
 const authService = {
   login,
+  getOrders,
 };
 
 export default authService;

@@ -26,7 +26,6 @@ const MainLayout = () => {
   const { user } = useSelector((state) => state.auth);
   useEffect(() => {
     if (!user) {
-      console.log("Pankaj");
       navigate("/");
     }
   }, []);

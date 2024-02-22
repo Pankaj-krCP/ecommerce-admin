@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import {
   AiOutlineBgColors,
   AiOutlineDashboard,
@@ -21,6 +23,13 @@ const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (!user) {
+      console.log("Pankaj");
+      navigate("/");
+    }
+  }, []);
   const {
     token: { colorBgContainer },
   } = theme.useToken();

@@ -15,6 +15,7 @@ export const uploadImg = createAsyncThunk(
     }
   }
 );
+
 export const delImg = createAsyncThunk(
   "delete/images",
   async (public_id, thunkAPI) => {
@@ -25,6 +26,7 @@ export const delImg = createAsyncThunk(
     }
   }
 );
+
 const initialState = {
   images: [],
   isError: false,
@@ -32,10 +34,25 @@ const initialState = {
   isSuccess: false,
   message: "",
 };
+
 export const uploadSlice = createSlice({
   name: "imaegs",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: (state, action) => {
+      state.images = [];
+      state.isError = false;
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.message = "";
+    },
+    messageReset: (state, action) => {
+      state.isError = false;
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.message = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(uploadImg.pending, (state) => {
@@ -72,4 +89,6 @@ export const uploadSlice = createSlice({
       });
   },
 });
+
+export const { reset, messageReset } = uploadSlice.actions;
 export default uploadSlice.reducer;

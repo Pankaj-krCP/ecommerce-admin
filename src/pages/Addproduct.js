@@ -12,8 +12,16 @@ import { getCategories } from "../features/pcategory/pcategorySlice";
 import { getColors } from "../features/color/colorSlice";
 import Multiselect from "react-widgets/Multiselect";
 import "react-widgets/styles.css";
-import { uploadImg, delImg } from "../features/upload/uploadSlice";
-import { createProducts } from "../features/product/productSlice";
+import {
+  uploadImg,
+  delImg,
+  reset as imgReset,
+  messageReset as imgMessageReset,
+} from "../features/upload/uploadSlice";
+import {
+  createProducts,
+  reset as productReset,
+} from "../features/product/productSlice";
 import Dropzone from "react-dropzone";
 
 let schema = Yup.object().shape({
@@ -24,6 +32,7 @@ let schema = Yup.object().shape({
   category: Yup.string().required("Category is Required"),
   color: Yup.array().required("Colors are Required"),
   quantity: Yup.number().required("Quantity is Required"),
+  tags: Yup.string().required("Tags is Required"),
 });
 
 const Addproduct = () => {
@@ -40,24 +49,45 @@ const Addproduct = () => {
   const brandState = useSelector((state) => state.brand.brands);
   const catState = useSelector((state) => state.pCategory.pCategories);
   const colorState = useSelector((state) => state.color.colors);
-  const imgState = useSelector((state) => state.upload.images);
+  const imgState = useSelector((state) => state.upload);
+  const newProductState = useSelector((state) => state.product);
 
   useEffect(() => {
-    if (images.length < imgState.length) {
-      message.success("file uploaded successfully");
-    } else if (images.length > imgState.length) {
-      message.success("file deleted successfully");
+    const { isSuccess, isError } = imgState;
+    if (isSuccess && images.length < imgState.images.length) {
+      message.success("Image uploaded successfully!");
+    }
+    if (isSuccess && images.length > imgState.images.length) {
+      message.success("Image deleted successfully!");
+    }
+    if (isError) {
+      message.error("Something Went Wrong");
     }
     const temp = [];
-    imgState.forEach((i) => {
+    imgState.images.forEach((i) => {
       temp.push({
         public_id: i.public_id,
         url: i.url,
       });
     });
     setImages(temp);
-    formik.setFieldValue("images", temp);
-  }, [imgState.length]);
+    dispatch(imgMessageReset());
+  }, [imgState.images.length, imgState.isSuccess, imgState.isError]);
+
+  useEffect(() => {
+    const { isSuccess, isError, createdProduct } = newProductState;
+    if (isSuccess && createdProduct != "") {
+      message.success("Product Added successfully!");
+      formik.resetForm();
+      setColor([]);
+      setImages([]);
+      dispatch(imgReset());
+    }
+    if (isError) {
+      message.error("Something Went Wrong!");
+    }
+    dispatch(productReset());
+  }, [newProductState.isSuccess, newProductState.isError]);
 
   useEffect(() => {
     formik.values.color = color;
@@ -66,10 +96,16 @@ const Addproduct = () => {
 
   const colors = [];
   colorState.forEach((i) => {
-    colors.push({
-      _id: i._id,
-      color: i.title,
+    let flag = 0;
+    color.forEach((j) => {
+      if (i.title == j.color) flag = 1;
     });
+    if (!flag) {
+      colors.push({
+        _id: i._id,
+        color: i.title,
+      });
+    }
   });
 
   const formik = useFormik({
@@ -82,6 +118,7 @@ const Addproduct = () => {
       color: "",
       quantity: "",
       images: "",
+      tags: "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
@@ -178,12 +215,32 @@ const Addproduct = () => {
             {formik.touched.category && formik.errors.category}
           </div>
 
+          <select
+            className="form-control py-3"
+            id=""
+            name="tags"
+            onChange={formik.handleChange("tags")}
+            onBlur={formik.handleBlur("tags")}
+            value={formik.values.tags}
+          >
+            <option value="">Select Tags</option>
+            <option value="featured">Featured</option>
+            <option value="popular">Popular</option>
+            <option value="special">Special</option>
+            <option value="normal">Normal</option>
+          </select>
+          <div className="error">
+            {formik.touched.tags && formik.errors.tags}
+          </div>
+
           <Multiselect
             name="color"
             dataKey="id"
             textField="color"
             data={colors}
             onChange={(e) => setColor(e)}
+            value={color}
+            placeholder="Select Colors"
           />
           <div className="error">
             {formik.touched.color && formik.errors.color}
@@ -221,7 +278,7 @@ const Addproduct = () => {
           </div>
 
           <div className="showimages d-flex flex-wrap gap-3">
-            {imgState?.map((i, j) => {
+            {imgState.images?.map((i, j) => {
               return (
                 <div className="position-relative" key={j}>
                   <button

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import productService from "./productService";
 
 export const getProducts = createAsyncThunk(
@@ -23,6 +23,8 @@ export const createProducts = createAsyncThunk(
   }
 );
 
+export const resetState = createAction("reset_all");
+
 const initialState = {
   products: [],
   createdProduct: "",
@@ -34,16 +36,7 @@ const initialState = {
 export const productSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {
-    reset: (state, action) => {
-      state.products = [];
-      state.createdProduct = "";
-      state.isError = false;
-      state.isLoading = false;
-      state.isSuccess = false;
-      state.message = "";
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getProducts.pending, (state) => {
@@ -75,9 +68,9 @@ export const productSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
-      });
+      })
+      .addCase(resetState, () => initialState);
   },
 });
 
-export const { reset } = productSlice.actions;
 export default productSlice.reducer;

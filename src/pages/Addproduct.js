@@ -3,24 +3,23 @@ import CustomInput from "../components/CustomInput";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { InboxOutlined } from "@ant-design/icons";
-import { message } from "antd";
+import { message, Select } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { getBrands } from "../features/brand/brandSlice";
 import { getCategories } from "../features/pcategory/pcategorySlice";
 import { getColors } from "../features/color/colorSlice";
-import Multiselect from "react-widgets/Multiselect";
-import "react-widgets/styles.css";
+
 import {
   uploadImg,
   delImg,
-  reset as imgReset,
-  messageReset as imgMessageReset,
+  resetState as imgResetState,
+  resetMsgState as imgMsgResetState,
 } from "../features/upload/uploadSlice";
 import {
   createProducts,
-  reset as productReset,
+  resetState as productResetState,
 } from "../features/product/productSlice";
 import Dropzone from "react-dropzone";
 
@@ -30,7 +29,9 @@ let schema = Yup.object().shape({
   price: Yup.number().required("Price is Required"),
   brand: Yup.string().required("Brand is Required"),
   category: Yup.string().required("Category is Required"),
-  color: Yup.array().required("Colors are Required"),
+  color: Yup.array()
+    .min(1, "Pick at least one color")
+    .required("Color is Required"),
   quantity: Yup.number().required("Quantity is Required"),
   tags: Yup.string().required("Tags is Required"),
 });
@@ -39,6 +40,7 @@ const Addproduct = () => {
   const [color, setColor] = useState([]);
   const [images, setImages] = useState([]);
   const dispatch = useDispatch();
+  const coloroptions = [];
 
   useEffect(() => {
     dispatch(getBrands());
@@ -56,12 +58,15 @@ const Addproduct = () => {
     const { isSuccess, isError } = imgState;
     if (isSuccess && images.length < imgState.images.length) {
       message.success("Image uploaded successfully!");
+      dispatch(imgMsgResetState());
     }
     if (isSuccess && images.length > imgState.images.length) {
       message.success("Image deleted successfully!");
+      dispatch(imgMsgResetState());
     }
     if (isError) {
       message.error("Something Went Wrong");
+      dispatch(imgMsgResetState());
     }
     const temp = [];
     imgState.images.forEach((i) => {
@@ -71,8 +76,7 @@ const Addproduct = () => {
       });
     });
     setImages(temp);
-    dispatch(imgMessageReset());
-  }, [imgState.images.length, imgState.isSuccess, imgState.isError]);
+  }, [imgState.isSuccess, imgState.isError]);
 
   useEffect(() => {
     const { isSuccess, isError, createdProduct } = newProductState;
@@ -81,12 +85,12 @@ const Addproduct = () => {
       formik.resetForm();
       setColor([]);
       setImages([]);
-      dispatch(imgReset());
+      dispatch(imgResetState());
     }
     if (isError) {
       message.error("Something Went Wrong!");
     }
-    dispatch(productReset());
+    dispatch(productResetState());
   }, [newProductState.isSuccess, newProductState.isError]);
 
   useEffect(() => {
@@ -94,16 +98,15 @@ const Addproduct = () => {
     formik.values.images = images;
   }, [color, images]);
 
-  const colors = [];
   colorState.forEach((i) => {
     let flag = 0;
     color.forEach((j) => {
-      if (i.title == j.color) flag = 1;
+      if (i.title == j) flag = 1;
     });
     if (!flag) {
-      colors.push({
-        _id: i._id,
-        color: i.title,
+      coloroptions.push({
+        label: i.title,
+        value: i.title,
       });
     }
   });
@@ -181,7 +184,9 @@ const Addproduct = () => {
             onBlur={formik.handleBlur("brand")}
             value={formik.values.brand}
           >
-            <option value="">Select Brand</option>
+            <option value="" disabled>
+              Select Brand
+            </option>
             {brandState.map((i, j) => {
               return (
                 <option key={j} value={i.title}>
@@ -202,7 +207,9 @@ const Addproduct = () => {
             onBlur={formik.handleBlur("category")}
             value={formik.values.category}
           >
-            <option value="">Select Category</option>
+            <option value="" disabled>
+              Select Category
+            </option>
             {catState.map((i, j) => {
               return (
                 <option key={j} value={i.title}>
@@ -223,7 +230,9 @@ const Addproduct = () => {
             onBlur={formik.handleBlur("tags")}
             value={formik.values.tags}
           >
-            <option value="">Select Tags</option>
+            <option value="" disabled>
+              Select Tags
+            </option>
             <option value="featured">Featured</option>
             <option value="popular">Popular</option>
             <option value="special">Special</option>
@@ -233,14 +242,14 @@ const Addproduct = () => {
             {formik.touched.tags && formik.errors.tags}
           </div>
 
-          <Multiselect
-            name="color"
-            dataKey="id"
-            textField="color"
-            data={colors}
-            onChange={(e) => setColor(e)}
+          <Select
+            mode="multiple"
+            allowClear
+            className="w-100"
+            placeholder="Select colors"
             value={color}
-            placeholder="Select Colors"
+            onChange={(e) => setColor(e)}
+            options={coloroptions}
           />
           <div className="error">
             {formik.touched.color && formik.errors.color}

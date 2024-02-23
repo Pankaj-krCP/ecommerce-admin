@@ -53,9 +53,7 @@ const Productlist = () => {
       title: productState[i].title,
       brand: productState[i].brand,
       category: productState[i].category,
-      color: productState[i].color.map((i, j) => {
-        return <p key={j}>{i.color}</p>;
-      }),
+      color: productState[i].color,
       price: `${productState[i].price}`,
       action: (
         <>

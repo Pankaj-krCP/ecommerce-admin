@@ -1,25 +1,24 @@
-import React from "react";
-import CustomInput from "../components/CustomInput";
+import React, { useEffect } from "react";
+import BrandForm from "../components/BrandForm";
+import { useSelector } from "react-redux";
+import { message } from "antd";
 
 const Addbrand = () => {
+  const newBrandState = useSelector((state) => state.brand);
+  useEffect(() => {
+    const { isSuccess, isError, createdBrand } = newBrandState;
+    if (isSuccess && createdBrand != "") {
+      message.success("Brand Added successfully!");
+    }
+    if (isError) {
+      message.error("Something Went Wrong!");
+    }
+  }, [newBrandState.isSuccess, newBrandState.isError]);
+
   return (
     <div>
       <h3 className="mb-4 title">Add Brand</h3>
-      <div>
-        <form action="">
-          <CustomInput
-            type="text"
-            placeholder="Enter Brand"
-            label="Enter Brand"
-          />
-          <button
-            className="btn btn-success border-0 rounded-3 my-5"
-            type="submit"
-          >
-            Add Brand
-          </button>
-        </form>
-      </div>
+      <BrandForm />
     </div>
   );
 };

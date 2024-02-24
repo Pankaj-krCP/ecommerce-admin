@@ -7,7 +7,7 @@ import { tag } from "../utils/contsant";
 import RequiredMultiSelect from "./RequiredMultiSelect";
 import DragnDrop from "./DragnDrop";
 import DescriptionInput from "./DescriptionInput";
-import productSchema from "../utils/productSchema";
+import productSchema from "../utils/schema/productSchema";
 import { createProducts } from "../features/product/productSlice";
 import { getBrands } from "../features/brand/brandSlice";
 import { getCategories } from "../features/pcategory/pcategorySlice";
@@ -38,7 +38,9 @@ const ProductForm = () => {
       setColor([]);
       dispatch(imgResetState());
     }
-    dispatch(productResetState());
+    setTimeout(() => {
+      dispatch(productResetState());
+    }, 100);
   }, [newProductState.isSuccess, newProductState.isError]);
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const ProductForm = () => {
   });
 
   return (
-    <>
+    <div>
       <form onSubmit={formik.handleSubmit} className="d-flex flex-column gap-3">
         <RequiredInput formik={formik} type={"text"} name={"title"} />
         <DescriptionInput formik={formik} />
@@ -106,7 +108,7 @@ const ProductForm = () => {
           Add Product
         </button>
       </form>
-    </>
+    </div>
   );
 };
 

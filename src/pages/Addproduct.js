@@ -19,9 +19,7 @@ const Addproduct = () => {
   return (
     <div>
       <h3 className="mb-4 title">Add Product</h3>
-      <div>
-        <ProductForm />
-      </div>
+      <ProductForm />
     </div>
   );
 };

@@ -1,33 +1,34 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import brandSchema from "../utils/schema/brandSchema";
+import pcategorySchema from "../utils/schema/pcategorySchema";
+import {
+  resetState as catResetState,
+  createCategory,
+} from "../features/pcategory/pcategorySlice";
 import RequiredInput from "./RequiredInput";
-import { createBrands } from "../features/brand/brandSlice";
-import { resetState as brandResetState } from "../features/brand/brandSlice";
 
-const BrandForm = () => {
+const PCategoryForm = () => {
   const dispatch = useDispatch();
-
-  const newBrandState = useSelector((state) => state.brand);
+  const newCatState = useSelector((state) => state.pCategory);
 
   useEffect(() => {
-    const { isSuccess, createdBrand } = newBrandState;
-    if (isSuccess && createdBrand != "") {
+    const { isSuccess, createdCategory } = newCatState;
+    if (isSuccess && createdCategory != "") {
       formik.resetForm();
     }
     setTimeout(() => {
-      dispatch(brandResetState());
+      dispatch(catResetState());
     }, 100);
-  }, [newBrandState.isSuccess, newBrandState.isError]);
+  }, [newCatState.isSuccess, newCatState.isError]);
 
   const formik = useFormik({
     initialValues: {
       title: "",
     },
-    validationSchema: brandSchema,
+    schema: pcategorySchema,
     onSubmit: (value) => {
-      dispatch(createBrands(value));
+      dispatch(createCategory(value));
     },
   });
 
@@ -46,4 +47,4 @@ const BrandForm = () => {
   );
 };
 
-export default BrandForm;
+export default PCategoryForm;

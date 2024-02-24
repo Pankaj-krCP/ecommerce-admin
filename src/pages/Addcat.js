@@ -1,25 +1,25 @@
-import React from "react";
-import CustomInput from "../components/CustomInput";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { message } from "antd";
+
+import PCategoryForm from "../components/PCategoryForm";
 
 const Addcat = () => {
+  const newCatState = useSelector((state) => state.pCategory);
+  useEffect(() => {
+    const { isSuccess, isError, createdCategory } = newCatState;
+    if (isSuccess && createdCategory != "") {
+      message.success("Product Category Addedd!");
+    }
+    if (isError) {
+      message.error("Something Went Wrong!");
+    }
+  }, [newCatState.isSuccess, newCatState.isError]);
+
   return (
     <div>
-      <h3 className="mb-4  title">Add Category</h3>
-      <div>
-        <form action="">
-          <CustomInput
-            type="text"
-            placeholder="Enter Blog Category"
-            label="Enter Blog Category"
-          />
-          <button
-            className="btn btn-success border-0 rounded-3 my-5"
-            type="submit"
-          >
-            Add Category
-          </button>
-        </form>
-      </div>
+      <h3 className="mb-4  title">Add Product Category</h3>
+      <PCategoryForm />
     </div>
   );
 };

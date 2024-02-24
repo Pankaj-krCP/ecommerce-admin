@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import pcategorySchema from "../utils/schema/pcategorySchema";
+import bcategorySchema from "../utils/schema/bcategorySchema";
 import {
   resetState as catResetState,
   createCategory,
-} from "../features/pcategory/pcategorySlice";
+} from "../features/bcategory/bcategorySlice";
 import RequiredInput from "./RequiredInput";
 
-const PCategoryForm = () => {
+const BCategoryForm = () => {
   const dispatch = useDispatch();
-  const newCatState = useSelector((state) => state.pCategory);
+  const newCatState = useSelector((state) => state.bCategory);
 
   useEffect(() => {
     const { isSuccess, createdCategory } = newCatState;
@@ -26,7 +26,7 @@ const PCategoryForm = () => {
     initialValues: {
       title: "",
     },
-    schema: pcategorySchema,
+    schema: bcategorySchema,
     onSubmit: (value) => {
       dispatch(createCategory(value));
     },
@@ -47,4 +47,4 @@ const PCategoryForm = () => {
   );
 };
 
-export default PCategoryForm;
+export default BCategoryForm;

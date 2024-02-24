@@ -1,35 +1,35 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import brandSchema from "../utils/schema/brandSchema";
+import colorSchema from "../utils/schema/colorSchema";
 import RequiredInput from "./RequiredInput";
 import {
-  createBrand,
-  resetState as brandResetState,
-} from "../features/brand/brandSlice";
+  createColor,
+  resetState as colorResetState,
+} from "../features/color/colorSlice";
 
-const BrandForm = () => {
+const ColorForm = () => {
   const dispatch = useDispatch();
 
-  const newBrandState = useSelector((state) => state.brand);
+  const newColorState = useSelector((state) => state.color);
 
   useEffect(() => {
-    const { isSuccess, createdBrand } = newBrandState;
-    if (isSuccess && createdBrand != "") {
+    const { isSuccess, createdColor } = newColorState;
+    if (isSuccess && createdColor != "") {
       formik.resetForm();
     }
     setTimeout(() => {
-      dispatch(brandResetState());
+      dispatch(colorResetState());
     }, 100);
-  }, [newBrandState.isSuccess, newBrandState.isError]);
+  }, [newColorState.isSuccess, newColorState.isError]);
 
   const formik = useFormik({
     initialValues: {
       title: "",
     },
-    validationSchema: brandSchema,
+    validationSchema: colorSchema,
     onSubmit: (value) => {
-      dispatch(createBrand(value));
+      dispatch(createColor(value));
     },
   });
 
@@ -41,11 +41,11 @@ const BrandForm = () => {
           className="btn btn-success border-0 rounded-3 my-5"
           type="submit"
         >
-          Add Brand
+          Add Color
         </button>
       </form>
     </div>
   );
 };
 
-export default BrandForm;
+export default ColorForm;

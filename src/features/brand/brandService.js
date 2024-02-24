@@ -7,14 +7,14 @@ const getBrands = async () => {
   return response.data;
 };
 
-const createBrands = async (brand) => {
+const createBrand = async (brand) => {
   const response = await axios.post(`${base_url}brand/`, brand, config);
   return response.data;
 };
 
 const brandService = {
   getBrands,
-  createBrands,
+  createBrand,
 };
 
 export default brandService;

@@ -8,12 +8,14 @@ import RequiredMultiSelect from "./RequiredMultiSelect";
 import DragnDrop from "./DragnDrop";
 import DescriptionInput from "./DescriptionInput";
 import productSchema from "../utils/schema/productSchema";
-import { createProducts } from "../features/product/productSlice";
 import { getBrands } from "../features/brand/brandSlice";
 import { getCategories } from "../features/pcategory/pcategorySlice";
 import { getColors } from "../features/color/colorSlice";
 import { resetState as imgResetState } from "../features/upload/uploadSlice";
-import { resetState as productResetState } from "../features/product/productSlice";
+import {
+  createProducts,
+  resetState as productResetState,
+} from "../features/product/productSlice";
 
 const ProductForm = () => {
   const [color, setColor] = useState([]);
@@ -32,15 +34,20 @@ const ProductForm = () => {
   const newProductState = useSelector((state) => state.product);
 
   useEffect(() => {
-    const { isSuccess, createdProduct } = newProductState;
+    const { isSuccess, isError, createdProduct } = newProductState;
     if (isSuccess && createdProduct != "") {
       formik.resetForm();
       setColor([]);
       dispatch(imgResetState());
+      setTimeout(() => {
+        dispatch(productResetState());
+      }, 100);
     }
-    setTimeout(() => {
-      dispatch(productResetState());
-    }, 100);
+    if (isError) {
+      setTimeout(() => {
+        dispatch(productResetState());
+      }, 100);
+    }
   }, [newProductState.isSuccess, newProductState.isError]);
 
   useEffect(() => {

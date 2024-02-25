@@ -16,7 +16,7 @@ export const createBrand = createAsyncThunk(
   "brand/create-brands",
   async (brand, thunkAPI) => {
     try {
-      return await brandService.createBrands(brand);
+      return await brandService.createBrand(brand);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

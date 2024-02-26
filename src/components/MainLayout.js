@@ -9,7 +9,7 @@ import {
   AiOutlineShoppingCart,
   AiOutlineUser,
 } from "react-icons/ai";
-
+import { RiCouponLine } from "react-icons/ri";
 import { SiBrandfolder } from "react-icons/si";
 import { FaBloggerB, FaClipboardList } from "react-icons/fa";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -115,19 +115,36 @@ const MainLayout = () => {
               label: "Orders",
             },
             {
+              key: "marketing",
+              icon: <RiCouponLine className="fs-4" />,
+              label: "Marketing",
+              children: [
+                {
+                  key: "coupon",
+                  icon: <ImBlog className="fs-4" />,
+                  label: "Add Coupon",
+                },
+                {
+                  key: "coupon-list",
+                  icon: <RiCouponLine className="fs-4" />,
+                  label: "Coupon List",
+                },
+              ],
+            },
+            {
               key: "blogs",
               icon: <FaBloggerB className="fs-4" />,
               label: "Blogs",
               children: [
                 {
                   key: "blog",
-                  icon: <FaBloggerB className="fs-4" />,
+                  icon: <ImBlog className="fs-4" />,
                   label: "Add Blog",
                 },
                 {
                   key: "blog-list",
                   icon: <FaBloggerB className="fs-4" />,
-                  label: "Blog-list",
+                  label: "Blog List",
                 },
                 {
                   key: "blog-category",
@@ -136,7 +153,7 @@ const MainLayout = () => {
                 },
                 {
                   key: "blog-category-list",
-                  icon: <ImBlog className="fs-4" />,
+                  icon: <FaBloggerB className="fs-4" />,
                   label: "Blog Category List",
                 },
               ],

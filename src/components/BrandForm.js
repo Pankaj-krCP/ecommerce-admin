@@ -5,31 +5,47 @@ import brandSchema from "../utils/schema/brandSchema";
 import RequiredInput from "./RequiredInput";
 import {
   createBrand,
-  resetState as brandResetState,
+  resetMsgState,
+  updateABrand,
 } from "../features/brand/brandSlice";
 
-const BrandForm = () => {
+const BrandForm = ({ brandId }) => {
   const dispatch = useDispatch();
 
   const newBrandState = useSelector((state) => state.brand);
 
   useEffect(() => {
-    const { isSuccess, createdBrand } = newBrandState;
-    if (isSuccess && createdBrand != "") {
+    const { isSuccess, isError, createdBrand, updatedBrand } = newBrandState;
+    if (
+      (isSuccess && createdBrand != "") ||
+      (isSuccess && updatedBrand != "")
+    ) {
       formik.resetForm();
+      setTimeout(() => {
+        dispatch(resetMsgState());
+      }, 100);
     }
-    setTimeout(() => {
-      dispatch(brandResetState());
-    }, 100);
+    if (isError) {
+      setTimeout(() => {
+        dispatch(resetMsgState());
+      }, 100);
+    }
   }, [newBrandState.isSuccess, newBrandState.isError]);
+
+  const brandName = newBrandState.brands.filter((ele) => ele._id == brandId);
 
   const formik = useFormik({
     initialValues: {
-      title: "",
+      title: brandName.length > 0 ? brandName[0].title : "",
     },
     validationSchema: brandSchema,
     onSubmit: (value) => {
-      dispatch(createBrand(value));
+      if (brandId != undefined) {
+        const data = { _id: brandId, brandData: value };
+        dispatch(updateABrand(data));
+      } else {
+        dispatch(createBrand(value));
+      }
     },
   });
 
@@ -41,7 +57,7 @@ const BrandForm = () => {
           className="btn btn-success border-0 rounded-3 my-5"
           type="submit"
         >
-          Add Brand
+          {`${brandId == undefined ? "Add Brand" : "Update Brand"}`}
         </button>
       </form>
     </div>

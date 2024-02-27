@@ -13,13 +13,18 @@ const BCategoryForm = () => {
   const newCatState = useSelector((state) => state.bCategory);
 
   useEffect(() => {
-    const { isSuccess, createdCategory } = newCatState;
+    const { isSuccess, isError, createdCategory } = newCatState;
     if (isSuccess && createdCategory != "") {
       formik.resetForm();
+      setTimeout(() => {
+        dispatch(catResetState());
+      }, 100);
     }
-    setTimeout(() => {
-      dispatch(catResetState());
-    }, 100);
+    if (isError) {
+      setTimeout(() => {
+        dispatch(catResetState());
+      }, 100);
+    }
   }, [newCatState.isSuccess, newCatState.isError]);
 
   const formik = useFormik({

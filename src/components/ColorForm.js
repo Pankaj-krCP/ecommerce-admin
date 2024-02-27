@@ -17,13 +17,18 @@ const ColorForm = () => {
   const newColorState = useSelector((state) => state.color);
 
   useEffect(() => {
-    const { isSuccess, createdColor } = newColorState;
+    const { isSuccess, isError, createdColor } = newColorState;
     if (isSuccess && createdColor != "") {
       formik.resetForm();
+      setTimeout(() => {
+        dispatch(colorResetState());
+      }, 100);
     }
-    setTimeout(() => {
-      dispatch(colorResetState());
-    }, 100);
+    if (isError) {
+      setTimeout(() => {
+        dispatch(colorResetState());
+      }, 100);
+    }
   }, [newColorState.isSuccess, newColorState.isError]);
 
   const formik = useFormik({

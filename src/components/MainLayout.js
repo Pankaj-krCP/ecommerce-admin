@@ -175,7 +175,7 @@ const MainLayout = () => {
           }}
         >
           <Button
-            className="trigger"
+            className="trigger mt-3"
             type="text"
             icon={collapsed ? <AiOutlinePicRight /> : <AiOutlinePicLeft />}
             onClick={() => setCollapsed(!collapsed)}

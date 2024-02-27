@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import BrandForm from "../components/BrandForm";
 import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
-import { resetMsgState } from "../features/brand/brandSlice";
 import { useLocation, useNavigate } from "react-router-dom";
+import BrandForm from "../components/BrandForm";
+import { resetMsgState } from "../features/brand/brandSlice";
 
 const Addbrand = () => {
   const dispatch = useDispatch();

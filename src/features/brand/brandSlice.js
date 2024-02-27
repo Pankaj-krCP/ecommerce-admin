@@ -52,6 +52,7 @@ const initialState = {
   brands: [],
   createdBrand: "",
   updatedBrand: "",
+  deletedBrand: "",
   isError: false,
   isLoading: false,
   isSuccess: false,

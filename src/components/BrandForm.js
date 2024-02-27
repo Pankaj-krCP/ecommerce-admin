@@ -11,7 +11,6 @@ import {
 
 const BrandForm = ({ brandId }) => {
   const dispatch = useDispatch();
-
   const newBrandState = useSelector((state) => state.brand);
 
   useEffect(() => {

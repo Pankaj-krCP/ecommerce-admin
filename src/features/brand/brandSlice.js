@@ -128,6 +128,7 @@ export const brandSlice = createSlice({
       .addCase(resetMsgState, (state) => {
         state.createdBrand = "";
         state.updatedBrand = "";
+        state.deletedBrand = "";
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = false;

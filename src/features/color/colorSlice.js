@@ -23,11 +23,36 @@ export const createColor = createAsyncThunk(
   }
 );
 
+export const updateAColor = createAsyncThunk(
+  "color/update-color",
+  async (color, thunkAPI) => {
+    try {
+      return await colorService.updateColor(color);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteAColor = createAsyncThunk(
+  "color/delete-color",
+  async (id, thunkAPI) => {
+    try {
+      return await colorService.deleteColor(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const resetState = createAction("resete_all");
+export const resetMsgState = createAction("Reset_msg");
 
 const initialState = {
   colors: [],
   createdColor: "",
+  updatedColor: "",
+  deletedColor: "",
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -69,7 +94,46 @@ export const colorSlice = createSlice({
         state.isSuccess = false;
         state.message = action.payload;
       })
-      .addCase(resetState, () => initialState);
+      .addCase(deleteAColor.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteAColor.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deletedColor = action.payload;
+      })
+      .addCase(deleteAColor.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateAColor.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateAColor.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updatedColor = action.payload;
+      })
+      .addCase(updateAColor.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(resetState, () => initialState)
+      .addCase(resetMsgState, (state) => {
+        state.createdColor = "";
+        state.updatedColor = "";
+        state.deletedColor = "";
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = "";
+      });
   },
 });
 export default colorSlice.reducer;

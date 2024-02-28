@@ -44,7 +44,6 @@ const Brandlist = () => {
 
   const deleteBrand = (e) => {
     dispatch(deleteABrand(e));
-
     setOpen(false);
     setTimeout(() => {
       dispatch(getBrands());

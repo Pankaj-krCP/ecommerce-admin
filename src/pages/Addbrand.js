@@ -14,10 +14,10 @@ const Addbrand = () => {
   useEffect(() => {
     const { isSuccess, isError, createdBrand, updatedBrand } = newBrandState;
     if (isSuccess && createdBrand != "") {
-      message.success("Brand Added successfully!");
+      message.success("Brand Addedd Successfully!");
     }
     if (isSuccess && updatedBrand) {
-      message.success("Brand Updated successfully!");
+      message.success("Brand Updated Successfully!");
       navigate("/admin/brand-list");
     }
     if (isError) {
@@ -28,9 +28,9 @@ const Addbrand = () => {
 
   return (
     <div>
-      <h3 className="mb-4 title">{`${
-        getBrandId == undefined ? "Add Brand" : "Edit Brand"
-      }`}</h3>
+      <h3 className="mb-4 title">
+        {`${getBrandId == undefined ? "Add" : "Edit"}`} Brand
+      </h3>
       <BrandForm brandId={getBrandId} />
     </div>
   );

@@ -56,7 +56,8 @@ const BrandForm = ({ brandId }) => {
           className="btn btn-success border-0 rounded-3 my-5"
           type="submit"
         >
-          {`${brandId == undefined ? "Add Brand" : "Update Brand"}`}
+          {`${brandId == undefined ? "Add" : "Update"}`}
+          Brand
         </button>
       </form>
     </div>

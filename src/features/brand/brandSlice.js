@@ -58,6 +58,7 @@ const initialState = {
   isSuccess: false,
   message: "",
 };
+
 export const brandSlice = createSlice({
   name: "brands",
   initialState,

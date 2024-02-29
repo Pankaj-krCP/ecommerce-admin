@@ -29,7 +29,7 @@ const Addcolor = () => {
   return (
     <div>
       <h3 className="mb-4 title">
-        {`${getColorId == undefined ? "Add" : "Edit"}`} Color
+        {`${getColorId == undefined ? "Add " : "Edit "}`} Color
       </h3>
       <ColorForm colorId={getColorId} />
     </div>

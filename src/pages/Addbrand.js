@@ -11,6 +11,7 @@ const Addbrand = () => {
   const navigate = useNavigate();
   const getBrandId = location.pathname.split("/")[3];
   const newBrandState = useSelector((state) => state.brand);
+
   useEffect(() => {
     const { isSuccess, isError, createdBrand, updatedBrand } = newBrandState;
     if (isSuccess && createdBrand != "") {
@@ -29,7 +30,7 @@ const Addbrand = () => {
   return (
     <div>
       <h3 className="mb-4 title">
-        {`${getBrandId == undefined ? "Add" : "Edit"}`} Brand
+        {`${getBrandId == undefined ? "Add " : "Edit "}`} Brand
       </h3>
       <BrandForm brandId={getBrandId} />
     </div>

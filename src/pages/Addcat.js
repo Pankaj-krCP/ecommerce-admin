@@ -17,7 +17,7 @@ const Addcat = () => {
     if (isSuccess && createdCategory != "") {
       message.success("Product Category Addedd!");
     }
-    if (isSuccess && updatedCategory) {
+    if (isSuccess && updatedCategory != "") {
       message.success("Category Updated successfully!");
       navigate("/admin/category-list");
     }
@@ -30,11 +30,8 @@ const Addcat = () => {
   return (
     <div>
       <h3 className="mb-4  title">
-        {`${
-          getCateroryId == undefined
-            ? "Add Product Category"
-            : "Edit Product Category"
-        }`}
+        {`${getCateroryId == undefined ? "Add " : "Edit "}`}
+        Product Category
       </h3>
       <PCategoryForm categoryId={getCateroryId} />
     </div>

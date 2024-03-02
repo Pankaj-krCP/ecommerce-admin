@@ -59,7 +59,8 @@ const PCategoryForm = ({ categoryId }) => {
           className="btn btn-success border-0 rounded-3 my-5"
           type="submit"
         >
-          {`${categoryId == undefined ? "Add Category" : "Update Category"}`}
+          {`${categoryId == undefined ? "Add " : "Update "}`}
+          Category
         </button>
       </form>
     </div>

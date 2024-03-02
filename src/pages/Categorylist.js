@@ -56,6 +56,7 @@ const Categorylist = () => {
     dispatch(resetState());
     dispatch(getCategories());
   }, []);
+
   const pcategoryState = useSelector((state) => state.pCategory);
 
   useEffect(() => {
@@ -113,7 +114,7 @@ const Categorylist = () => {
         performAction={() => {
           deleteCategory(categoryId);
         }}
-        title="Are you sure you want to delete this category?"
+        title="Are you sure you want to delete this category ?"
       />
     </div>
   );

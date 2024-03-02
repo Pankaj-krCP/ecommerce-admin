@@ -54,6 +54,7 @@ function App() {
           <Route path="enquiries" element={<Enquiries />} />
           <Route path="blog" element={<Addblog />} />
           <Route path="blog-category" element={<Addblogcat />} />
+          <Route path="blog-category/:id" element={<Addblogcat />} />
         </Route>
       </Routes>
     </Router>

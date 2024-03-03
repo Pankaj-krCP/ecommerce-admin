@@ -11,6 +11,7 @@ const Addcat = () => {
   const navigate = useNavigate();
   const getCateroryId = location.pathname.split("/")[3];
   const newCatState = useSelector((state) => state.pCategory);
+
   useEffect(() => {
     const { isSuccess, isError, createdCategory, updatedCategory } =
       newCatState;

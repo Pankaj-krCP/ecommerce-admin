@@ -1,10 +1,16 @@
-import React, { useEffect } from "react";
-import { Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, message } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../features/product/productSlice";
 import { Link } from "react-router-dom";
+import {
+  getProducts,
+  deleteAProduct,
+  resetState,
+} from "../features/product/productSlice";
+import { delImg } from "../features/upload/uploadSlice";
+import CustomModal from "../components/CustomModal";
 
 const columns = [
   {
@@ -41,28 +47,85 @@ const columns = [
   },
 ];
 const Productlist = () => {
+  const [open, setOpen] = useState(false);
+  const [productId, setproductId] = useState("");
+  const [imgId, setimgId] = useState("");
+  const [count, setCount] = useState(0);
   const dispatch = useDispatch();
+
+  const showModal = (pid, img) => {
+    setOpen(true);
+    setproductId(pid);
+    setimgId(img);
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
+
+  const deleteProduct = (e) => {
+    dispatch(deleteAProduct(e));
+    imgId.forEach((ele) => {
+      dispatch(delImg(ele.public_id));
+    });
+
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getProducts());
+    }, 100);
+  };
+
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getProducts());
   }, []);
-  const productState = useSelector((state) => state.product.products);
+
+  const productState = useSelector((state) => state.product);
+
+  useEffect(() => {
+    setCount(productState.products.length);
+  }, [productState.products.length]);
+
+  useEffect(() => {
+    const { isSuccess, isError } = productState;
+    if (isSuccess && productId != "") {
+      message.success("Product deleted successfully!");
+      setproductId("");
+    }
+    if (isError && productId != "") {
+      message.error("Something Went Wrong!");
+      setproductId("");
+    }
+  }, [count]);
+
   const data1 = [];
-  for (let i = 0; i < productState.length; i++) {
+  for (let i = 0; i < productState.products.length; i++) {
     data1.push({
       key: i + 1,
-      title: productState[i].title,
-      brand: productState[i].brand,
-      category: productState[i].category,
-      color: productState[i].color,
-      price: `${productState[i].price}`,
+      title: productState.products[i].title,
+      brand: productState.products[i].brand,
+      category: productState.products[i].category,
+      color: productState.products[i].color,
+      price: productState.products[i].price,
       action: (
         <>
-          <Link to="/" className=" fs-5 text-blue">
+          <Link
+            to={`/admin/product/${productState.products[i]._id}`}
+            className=" fs-5 text-blue"
+          >
             <BiEdit />
           </Link>
-          <Link className="ms-3 fs-5 text-danger" to="/">
+          <button
+            className="ms-3 fs-5 text-danger bg-transparent border-0"
+            onClick={() =>
+              showModal(
+                productState.products[i]._id,
+                productState.products[i].images
+              )
+            }
+          >
             <AiFillDelete />
-          </Link>
+          </button>
         </>
       ),
     });
@@ -74,6 +137,14 @@ const Productlist = () => {
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => {
+          deleteProduct(productId);
+        }}
+        title="Are you sure you want to delete this product ?"
+      />
     </div>
   );
 };

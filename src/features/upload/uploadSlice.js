@@ -28,6 +28,7 @@ export const delImg = createAsyncThunk(
 );
 
 export const resetState = createAction("Reset_all");
+export const restoreImages = createAction("Restore_images");
 export const resetMsgState = createAction("Reset_msg");
 
 const initialState = {
@@ -82,6 +83,9 @@ export const uploadSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = "";
+      })
+      .addCase(restoreImages, (state, action) => {
+        state.images = action.payload;
       });
   },
 });

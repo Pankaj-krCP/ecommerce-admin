@@ -13,7 +13,7 @@ export const getCategories = createAsyncThunk(
 );
 
 export const createCategory = createAsyncThunk(
-  "productCategory/create-category",
+  "blogCategory/create-category",
   async (category, thunkAPI) => {
     try {
       return await bCategoryService.createBlogCategory(category);
@@ -24,7 +24,7 @@ export const createCategory = createAsyncThunk(
 );
 
 export const updateACategory = createAsyncThunk(
-  "category/update-category",
+  "blogCategory/update-category",
   async (category, thunkAPI) => {
     try {
       return await bCategoryService.updateBlogCategory(category);
@@ -35,7 +35,7 @@ export const updateACategory = createAsyncThunk(
 );
 
 export const deleteACategory = createAsyncThunk(
-  "category/delete-category",
+  "blogCategorydelete-category",
   async (id, thunkAPI) => {
     try {
       return await bCategoryService.deleteBlogCategory(id);

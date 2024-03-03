@@ -23,11 +23,36 @@ export const createProducts = createAsyncThunk(
   }
 );
 
+export const updateAProduct = createAsyncThunk(
+  "product/update-product",
+  async (product, thunkAPI) => {
+    try {
+      return await productService.updateProduct(product);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteAProduct = createAsyncThunk(
+  "product/delete-product",
+  async (id, thunkAPI) => {
+    try {
+      return await productService.deleteProduct(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const resetState = createAction("reset_all");
+export const resetMsgState = createAction("Reset_msg");
 
 const initialState = {
   products: [],
   createdProduct: "",
+  updatedProduct: "",
+  deletedProduct: "",
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -69,7 +94,46 @@ export const productSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(resetState, () => initialState);
+      .addCase(deleteAProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteAProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deletedProduct = action.payload;
+      })
+      .addCase(deleteAProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateAProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateAProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updatedProduct = action.payload;
+      })
+      .addCase(updateAProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(resetState, () => initialState)
+      .addCase(resetMsgState, (state) => {
+        state.createdProduct = "";
+        state.updatedProduct = "";
+        state.deletedProduct = "";
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = "";
+      });
   },
 });
 

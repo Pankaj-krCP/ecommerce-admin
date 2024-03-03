@@ -64,6 +64,7 @@ const ProductForm = ({ productId }) => {
       if (productName.length > 0) {
         setColor(productName[0].color);
         dispatch(restoreImages(productName[0].images));
+        formik.values.images = productName[0].images;
       }
     }, 100);
   }, []);

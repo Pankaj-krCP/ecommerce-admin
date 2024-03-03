@@ -9,6 +9,12 @@ const useImgUploadMssg = () => {
   const imgState = useSelector((state) => state.upload);
 
   useEffect(() => {
+    setTimeout(() => {
+      setCount(imgState.images.length);
+    }, 100);
+  });
+
+  useEffect(() => {
     const { isSuccess, isError } = imgState;
     if (isSuccess && count < imgState.images.length) {
       message.success("Image uploaded successfully!");

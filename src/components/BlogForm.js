@@ -47,6 +47,7 @@ const BlogForm = ({ blogId }) => {
     setTimeout(() => {
       if (blogName.length > 0) {
         dispatch(restoreImages(blogName[0].images));
+        formik.values.images = blogName[0].images;
       }
     }, 100);
   }, []);

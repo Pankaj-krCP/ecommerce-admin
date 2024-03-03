@@ -10,7 +10,7 @@ export const getBlogs = createAsyncThunk("blog/get-blogs", async (thunkAPI) => {
 });
 
 export const createBlog = createAsyncThunk(
-  "product/create-products",
+  "blog/create-blogs",
   async (BlogData, thunkAPI) => {
     try {
       return await blogService.createBlog(BlogData);
@@ -20,11 +20,36 @@ export const createBlog = createAsyncThunk(
   }
 );
 
+export const updateABlog = createAsyncThunk(
+  "blog/update-blog",
+  async (blog, thunkAPI) => {
+    try {
+      return await blogService.updateBlog(blog);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteABlog = createAsyncThunk(
+  "blog/blog-delete",
+  async (id, thunkAPI) => {
+    try {
+      return await blogService.deleteBlog(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const resetState = createAction("reset_all");
+export const resetMsgState = createAction("Reset_msg");
 
 const initialState = {
   blogs: [],
   createdBlog: "",
+  updatedBlog: "",
+  deletedBlog: "",
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -66,7 +91,46 @@ export const blogSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(resetState, () => initialState);
+      .addCase(deleteABlog.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteABlog.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deletedBlog = action.payload;
+      })
+      .addCase(deleteABlog.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateABlog.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateABlog.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updatedBlog = action.payload;
+      })
+      .addCase(updateABlog.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(resetState, () => initialState)
+      .addCase(resetMsgState, (state) => {
+        state.createdBlog = "";
+        state.updatedBlog = "";
+        state.deletedBlog = "";
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = "";
+      });
   },
 });
 export default blogSlice.reducer;

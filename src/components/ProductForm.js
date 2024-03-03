@@ -11,10 +11,7 @@ import productSchema from "../utils/schema/productSchema";
 import { getBrands } from "../features/brand/brandSlice";
 import { getCategories } from "../features/pcategory/pcategorySlice";
 import { getColors } from "../features/color/colorSlice";
-import {
-  resetState as imgResetState,
-  restoreImages,
-} from "../features/upload/uploadSlice";
+import { resetState, restoreImages } from "../features/upload/uploadSlice";
 import {
   createProducts,
   resetMsgState,
@@ -46,7 +43,7 @@ const ProductForm = ({ productId }) => {
     ) {
       formik.resetForm();
       setColor([]);
-      dispatch(imgResetState());
+      dispatch(resetState());
       setTimeout(() => {
         dispatch(resetMsgState());
       }, 100);

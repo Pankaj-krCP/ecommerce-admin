@@ -7,13 +7,14 @@ import DragnDrop from "./DragnDrop";
 import DescriptionInput from "./DescriptionInput";
 import blogSchema from "../utils/schema/blogSchema";
 import { getCategories } from "../features/bcategory/bcategorySlice";
-import { resetState as imgResetState } from "../features/upload/uploadSlice";
+import { resetState, restoreImages } from "../features/upload/uploadSlice";
 import {
   createBlog,
-  resetState as blogResetState,
+  resetMsgState,
+  updateABlog,
 } from "../features/blogs/blogSlice";
 
-const BlogForm = () => {
+const BlogForm = ({ blogId }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,20 +26,30 @@ const BlogForm = () => {
   const newBlogState = useSelector((state) => state.blog);
 
   useEffect(() => {
-    const { isSuccess, isError, createdBlog } = newBlogState;
-    if (isSuccess && createdBlog != "") {
+    const { isSuccess, isError, createdBlog, updatedBlog } = newBlogState;
+    if ((isSuccess && createdBlog != "") || (isSuccess && updatedBlog != "")) {
       formik.resetForm();
-      dispatch(imgResetState());
+      dispatch(resetState());
       setTimeout(() => {
-        dispatch(blogResetState());
+        dispatch(resetMsgState());
       }, 100);
     }
     if (isError) {
       setTimeout(() => {
-        dispatch(blogResetState());
+        dispatch(resetMsgState());
       }, 100);
     }
   }, [newBlogState.isSuccess, newBlogState.isError]);
+
+  const blogName = newBlogState.blogs.filter((ele) => ele._id == blogId);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (blogName.length > 0) {
+        dispatch(restoreImages(blogName[0].images));
+      }
+    }, 100);
+  }, []);
 
   useEffect(() => {
     formik.values.images = imgState.images;
@@ -46,14 +57,19 @@ const BlogForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      description: "",
-      category: "",
-      images: "",
+      title: blogName.length > 0 ? blogName[0]?.title : "",
+      description: blogName.length > 0 ? blogName[0]?.description : "",
+      category: blogName.length > 0 ? blogName[0]?.category : "",
+      images: blogName.length > 0 ? blogName[0]?.images : "",
     },
     validationSchema: blogSchema,
     onSubmit: (values) => {
-      dispatch(createBlog(values));
+      if (blogId != undefined) {
+        const data = { _id: blogId, blogData: values };
+        dispatch(updateABlog(data));
+      } else {
+        dispatch(createBlog(values));
+      }
     },
   });
 
@@ -68,7 +84,7 @@ const BlogForm = () => {
           className="btn btn-success border-0 rounded-3 my-5"
           type="submit"
         >
-          Add Blog
+          {`${blogId == undefined ? "Add " : "Update "}`} Blog
         </button>
       </form>
     </div>

@@ -28,10 +28,10 @@ const columns = [
     dataIndex: "date",
   },
 
-  {
-    title: "Action",
-    dataIndex: "action",
-  },
+  // {
+  //   title: "Action",
+  //   dataIndex: "action",
+  // },
 ];
 
 const Orders = () => {
@@ -46,25 +46,23 @@ const Orders = () => {
     data1.push({
       key: i + 1,
       name: orderState[i].orderby.firstName,
-      product: orderState[i].products.map((i, j) => {
-        return (
-          <p key={j}>
-            {i.product?.title} : {i.count}
-          </p>
-        );
-      }),
+      product: (
+        <Link to={`/admin/order/${orderState[i].orderby._id}`}>
+          View Orders
+        </Link>
+      ),
       amount: orderState[i].paymentIntent.amount,
       date: new Date(orderState[i].createdAt).toLocaleString(),
-      action: (
-        <>
-          <Link to="/" className=" fs-5 text-blue">
-            <BiEdit />
-          </Link>
-          <Link className="ms-3 fs-5 text-danger" to="/">
-            <AiFillDelete />
-          </Link>
-        </>
-      ),
+      // action: (
+      //   <>
+      //     <Link to="/" className=" fs-5 text-blue">
+      //       <BiEdit />
+      //     </Link>
+      //     <Link className="ms-3 fs-5 text-danger" to="/">
+      //       <AiFillDelete />
+      //     </Link>
+      //   </>
+      // ),
     });
   }
   return (

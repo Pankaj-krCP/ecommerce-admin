@@ -22,6 +22,7 @@ import Addbrand from "./pages/Addbrand";
 import Addproduct from "./pages/Addproduct";
 import Addcoupon from "./pages/Addcoupon";
 import Couponlist from "./pages/Couponlist";
+import ViewEnq from "./pages/ViewEnq";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
           <Route path="blog-list" element={<Bloglist />} />
           <Route path="blog-category-list" element={<Blogcatlist />} />
           <Route path="enquiries" element={<Enquiries />} />
+          <Route path="enquiries/:id" element={<ViewEnq />} />
           <Route path="blog" element={<Addblog />} />
           <Route path="blog/:id" element={<Addblog />} />
           <Route path="blog-category" element={<Addblogcat />} />

@@ -18,7 +18,7 @@ const Forgotpassword = () => {
             label="Email"
           />
           <button
-            className="border-0 px-3 py-2 text-white w-100"
+            className="button border-0 rounded px-3 py-2 mt-4"
             style={{ background: "#001529" }}
             type="submit"
           >

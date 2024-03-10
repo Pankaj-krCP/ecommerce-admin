@@ -81,7 +81,7 @@ const Login = () => {
 
           <button
             to="/admin"
-            className="button border-0 px-3 py-2"
+            className="button border-0 rounded px-3 py-2"
             style={{ background: "#001529" }}
             type="submit"
           >

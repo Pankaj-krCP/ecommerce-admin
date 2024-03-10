@@ -109,23 +109,25 @@ const Productlist = () => {
       price: productState.products[i].price,
       action: (
         <>
-          <Link
-            to={`/admin/product/${productState.products[i]._id}`}
-            className=" fs-5 text-blue"
-          >
-            <BiEdit />
-          </Link>
-          <button
-            className="ms-3 fs-5 text-danger bg-transparent border-0"
-            onClick={() =>
-              showModal(
-                productState.products[i]._id,
-                productState.products[i].images
-              )
-            }
-          >
-            <AiFillDelete />
-          </button>
+          <div className="d-flex mb-0 align-items-center">
+            <Link
+              to={`/admin/product/${productState.products[i]._id}`}
+              className="fs-5 text-blue"
+            >
+              <BiEdit />
+            </Link>
+            <button
+              className="fs-5 ml-2 text-danger bg-transparent border-0"
+              onClick={() =>
+                showModal(
+                  productState.products[i]._id,
+                  productState.products[i].images
+                )
+              }
+            >
+              <AiFillDelete />
+            </button>
+          </div>
         </>
       ),
     });

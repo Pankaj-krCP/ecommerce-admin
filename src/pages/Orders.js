@@ -45,13 +45,11 @@ const Orders = () => {
   for (let i = 0; i < orderState.length; i++) {
     data1.push({
       key: i + 1,
-      name: orderState[i].orderby.firstName,
+      name: orderState[i].orderBy.firstName,
       product: (
-        <Link to={`/admin/order/${orderState[i].orderby._id}`}>
-          View Orders
-        </Link>
+        <Link to={`/admin/order/${orderState[i]._id}`}>View Orders</Link>
       ),
-      amount: orderState[i].paymentIntent.amount,
+      amount: orderState[i].totalPriceAfterDiscount,
       date: new Date(orderState[i].createdAt).toLocaleString(),
       // action: (
       //   <>

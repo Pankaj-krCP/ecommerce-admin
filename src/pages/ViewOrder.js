@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BiEdit, BiArrowBack } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getOrderByUser, getOrders } from "../features/auth/authSlice";
+import { getOrderById, getOrders } from "../features/auth/authSlice";
 const columns = [
   {
     title: "SNo",
@@ -44,19 +44,18 @@ const columns = [
 const ViewOrder = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const userId = location.pathname.split("/")[3];
+  const orderId = location.pathname.split("/")[3];
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOrderByUser(userId));
+    dispatch(getOrderById(orderId));
   }, []);
 
   const goBack = () => {
     navigate(-1);
   };
 
-  const orderState = useSelector((state) => state.auth.orderbyuser.products);
-
+  const orderState = useSelector((state) => state.auth.orderbyid.orderItems);
   const data1 = [];
   for (let i = 0; i < orderState?.length; i++) {
     data1.push({
@@ -64,9 +63,9 @@ const ViewOrder = () => {
       name: orderState[i].product.title,
       brand: orderState[i].product.brand,
       count: orderState[i].count,
-      amount: orderState[i].product.price,
-      color: orderState[i].product.color,
-      date: orderState[i].product.createdAt,
+      amount: orderState[i].price,
+      color: orderState[i].color,
+      date: new Date(orderState[i].product.createdAt).toLocaleString(),
       //   action: (
       //     <>
       //       <Link to="/" className=" fs-5 text-blue">

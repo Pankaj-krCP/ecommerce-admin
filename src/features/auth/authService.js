@@ -20,7 +20,6 @@ const getOrderById = async (id) => {
     `${base_url}user/getorderbyid/${id}`,
     config
   );
-  console.log(response.data);
   return response.data;
 };
 
